@@ -1,13 +1,15 @@
 #coding:utf-8
 import time
 from pynput import keyboard
+import session_manager as sm
 
 
 class Chronometre:
 
-    def __init__(self):
+    def __init__(self, currentSession):
         self.timenow = 0
         self.state = 0
+        self.currentSession = currentSession
 
     def launch(self):
         self.timenow = time.time()
@@ -17,6 +19,7 @@ class Chronometre:
         print("time stop")
         the_time = round(time.time() - self.timenow, 3)
         print("votre temps : " + str(the_time))  
+        sm.save_time_in_session(self.currentSession, the_time)
         return the_time
         
     def space_bar_pressed(self, key):
@@ -36,14 +39,13 @@ class Chronometre:
             print("fin du chrono")
             return False
 
-
     def listen(self):
         with keyboard.Listener(
                 on_press=self.space_bar_pressed,
                 on_release=self.space_bar_released) as listener:
             listener.join()    
 
-    
+
 def main():
     chrono = Chronometre()
     chrono.listen() 
