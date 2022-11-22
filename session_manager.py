@@ -20,6 +20,7 @@ def create_session(sessionName):
     session_list = []
     with open("memory.txt", "r", encoding="utf-8") as file:
         session_list = file.read().splitlines()
+    session_list.append(sessionName)
     with open("memory.txt", 'w', encoding='utf-8') as file:
         for elem in session_list:
             file.write(elem + "\n")

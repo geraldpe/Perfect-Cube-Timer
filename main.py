@@ -11,7 +11,7 @@ def session_creator():
 def create_existing_sessions_list():
     session_list = []
     with open("memory.txt", 'r', encoding='utf-8') as file:
-        session_list = file.read().splitlines
+        session_list = file.read().splitlines()
     return session_list
 
 def sessionManagerDeb():
