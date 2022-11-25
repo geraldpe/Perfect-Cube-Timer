@@ -1,25 +1,27 @@
 #coding:utf-8
 import time
 from pynput import keyboard
-import session_manager as sm
+import utils.session_manager as sm
 
 
-class Chronometre:
+class Chronometre(sm.sessionManager):
 
-    def __init__(self, currentSession):
-        self.timenow = 0
+    def __init__(self):
+        super().__init__()
+        self.timestart = 0
         self.state = 0
+        currentSession = self.sessionManagerDeb()
         self.currentSession = currentSession
 
     def launch(self):
-        self.timenow = time.time()
+        self.timestart = time.time()
         print("timer start")
     
-    def stop(self):
+    def stop(self) -> float|int:
         print("time stop")
-        the_time = round(time.time() - self.timenow, 3)
+        the_time = round(time.time() - self.timestart, 3)
         print("votre temps : " + str(the_time))  
-        sm.save_time_in_session(self.currentSession, the_time)
+        self.save_time_in_session(self.currentSession, the_time)
         return the_time
         
     def space_bar_pressed(self, key):
@@ -30,7 +32,7 @@ class Chronometre:
             elif self.state == 0:
                 self.state = 1
     
-    def space_bar_released(self, key):
+    def space_bar_released(self, key) -> None|bool:
         if key == keyboard.Key.space:
             if self.state == 1:
                 self.launch()
