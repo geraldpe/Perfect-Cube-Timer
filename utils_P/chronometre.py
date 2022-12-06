@@ -1,7 +1,7 @@
 #coding:utf-8
 import time
 from pynput import keyboard
-import utils.session_manager as sm
+import utils_P.session_manager as sm
 
 
 class Chronometre(sm.sessionManager):
@@ -29,7 +29,6 @@ class Chronometre(sm.sessionManager):
         the_time = round(time.time() - self.timestart, 3)
         print("votre temps : " + str(the_time))  
         self.currentSessionFile["times"].append(the_time)
-        print(self.currentSessionFile)
         return the_time
         
     def space_bar_pressed(self, key):

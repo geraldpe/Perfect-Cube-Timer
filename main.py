@@ -1,6 +1,6 @@
 #coding:utf-8
-import utils.chronometre as ch
-import utils.session_manager as sm
+import utils_P.chronometre as ch
+import utils_P.session_manager as sm
     
 
 def main():
@@ -9,7 +9,6 @@ def main():
     while running:
         chrono.listen()
         chrono.save_time_in_session(chrono.currentSessionName, chrono.currentSessionFile["times"])
-        print(chrono.currentSessionFile["times"])
     
 
 if __name__ == "__main__":
