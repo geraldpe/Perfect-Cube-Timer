@@ -7,7 +7,7 @@ class sessionManager:
     def __init__(self):
         pass
 
-    def get_json_file_content(self, path: str) -> dict[list[float|int]&int]:
+    def get_json_file_content(self, path: str) -> dict[list[float|int]|int]:
         """
         renvoie le contenu d'un fichier json sous la forme d'un dictionnaire (prend le chemin de fichier en entrée)
         """
@@ -15,19 +15,28 @@ class sessionManager:
             result = json.load(jsfile)
         return result
 
-    def save_time_in_session(self, sessionName: str, time: float|int) -> None:
+    def save_time_in_session(self, sessionName: str, time: float|int|list[float|int]) -> None:
         """
         sauvegarde un temps dans une session à la fin de la liste
+        si time est un int ou un float, on l'ajoute à la fin de la liste dans le fichier json
+        sinon, si c'est une liste, on va remplacer toute la liste du fichier json par la nouvelle
+        liste
+        (amélioration des performances meme si en vrai c'est pas ultra nécessaire.)
         """
         session_file = {}
-        if time is not None:
-            session_file = self.get_json_file_content("sessions/{}.json".format(sessionName))
-            session_file["times"].append(time)
-            session_file["times_in_session"] += 1
+        session_file = self.get_json_file_content("sessions/{}.json".format(sessionName))
+        if type(time) == float|int:
+            if time is not None:
+                session_file["times"]: list.append(time)
+                session_file["times_in_session"] += 1
+        else:
+            session_file["times"] = time
+            session_file["times_in_session"] = len(time)
         with open("./sessions/{}.json".format(sessionName), "w", encoding="utf-8") as jsfile:
-            json.dump(session_file, jsfile, indent=2)
+                json.dump(session_file, jsfile, indent=2)
+
     
-    def change_Number_of_times(self, sessionName: str, nmbtimes: int, session: dict[list[float|int]&int]):
+    def change_Number_of_times(self, sessionName: str, nmbtimes: int, session: dict[list[float|int]|int]):
         """
         change le nombre de temps effectués lors de la session
         """

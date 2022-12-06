@@ -10,18 +10,26 @@ class Chronometre(sm.sessionManager):
         super().__init__()
         self.timestart = 0
         self.state = 0
-        currentSession = self.sessionManagerDeb()
-        self.currentSession = currentSession
+        currentSessionName = self.sessionManagerDeb()
+        self.currentSessionName = currentSessionName
+        self.currentSessionFile: dict[list|int] = self.get_json_file_content("./sessions/{}.json".format(self.currentSessionName))
 
     def launch(self):
+        """
+        enregistre le temps de départ dans une variable
+        """
         self.timestart = time.time()
         print("timer start")
     
     def stop(self) -> float|int:
+        """
+        calcule le temps de résolution en faisant t1-t2 et le sauvegarde dans une liste. 
+        """
         print("time stop")
         the_time = round(time.time() - self.timestart, 3)
         print("votre temps : " + str(the_time))  
-        self.save_time_in_session(self.currentSession, the_time)
+        self.currentSessionFile["times"].append(the_time)
+        print(self.currentSessionFile)
         return the_time
         
     def space_bar_pressed(self, key):
