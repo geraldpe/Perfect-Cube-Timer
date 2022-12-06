@@ -3,12 +3,20 @@
 #include <time.h>
 
 
+void setup() {
+    // sets the seed to get different numbers each execution
+    time_t t1; 
+    srand((unsigned) time (&t1));
+}
+
 int getRandomNumber(int max) {
+    // donne un nombre random entre 0 et max (utiliser après setup)
     int a = rand() % max;
     return a;
 }
 
 void scramble(char *result) {
+    // fonction de génération de mélanges
     char FACES[] = "FRULBD";
     char SYMBOLS[] = "' 2";
     int currentNumber = 0;
@@ -26,13 +34,8 @@ void scramble(char *result) {
     }
 }
 
-void setup() {
-    time_t t1;
-    srand((unsigned) time (&t1));
-}
-
 int main(void) {
-    setup();    // sets the seed to get different numbers each execution
+    setup();    
     char the_scramble[61];
     for (int i = 0; i<5 ; i++) {
         scramble(the_scramble);
