@@ -10,9 +10,6 @@ class Chronometre(sm.sessionManager):
         super().__init__()
         self.timestart = 0
         self.state = 0
-        currentSessionName = self.sessionManagerDeb()
-        self.currentSessionName = currentSessionName
-        self.currentSessionFile: dict[list|int] = self.get_json_file_content("./sessions/{}.json".format(self.currentSessionName))
 
     def launch(self):
         """
@@ -47,6 +44,11 @@ class Chronometre(sm.sessionManager):
         elif key == keyboard.Key.esc:
             print("fin du chrono")
             return False
+    
+    def sessionManagerDeb(self) -> str:
+        currentSessionName = super().sessionManagerDeb()
+        self.currentSessionName = currentSessionName
+        self.currentSessionFile: dict[list|int] = self.get_json_file_content("./sessions/{}.json".format(self.currentSessionName))
 
     def listen(self):
         with keyboard.Listener(
