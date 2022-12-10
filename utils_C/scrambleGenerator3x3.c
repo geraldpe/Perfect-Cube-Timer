@@ -34,12 +34,21 @@ void scramble(char *result) {
     }
 }
 
+
+void write_file(char *the_scramble) {
+
+    FILE * sortie;
+    sortie = fopen("interface.txt", "w");
+
+    fprintf(sortie, the_scramble);
+    fclose(sortie);
+}
+
+
 int main(void) {
     setup();    
     char the_scramble[61];
-    for (int i = 0; i<5 ; i++) {
-        scramble(the_scramble);
-        printf("%s \n", the_scramble);
-    }
+    scramble(the_scramble);
+    write_file(the_scramble);
     return 0;
 }
