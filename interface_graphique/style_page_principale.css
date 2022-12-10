@@ -1,0 +1,15 @@
+
+
+header {
+    background-color: lavender;
+    height: 15%;
+    width: auto;
+    padding: 0px;
+    margin: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#title {
+    text-align: center;
+}
