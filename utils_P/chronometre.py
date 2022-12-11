@@ -2,14 +2,17 @@
 import time
 from pynput import keyboard
 import utils_P.session_manager as sm
+import utils_C.interfaceCPY as inCPY
 
 
 class Chronometre(sm.sessionManager):
 
-    def __init__(self):
+    def __init__(self, filePath, interfacePath):
         super().__init__()
         self.timestart = 0
         self.state = 0
+        self.filePath = filePath
+        self.interfacePath = interfacePath
 
     def launch(self):
         """
@@ -25,6 +28,7 @@ class Chronometre(sm.sessionManager):
         print("time stop")
         the_time = round(time.time() - self.timestart, 3)
         print("votre temps : " + str(the_time))  
+        print(inCPY.scramble(self.filePath, self.interfacePath))
         self.currentSessionFile["times"].append(the_time)
         return the_time
         
